@@ -1,0 +1,23 @@
+name: EMORA CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install
+      - run: node --check server.mjs
+      - run: node --check lib/ai.mjs
+      - run: node --check lib/store.mjs
+      - run: node --check lib/storage.mjs
+      - run: node --check lib/telegram.mjs
+      - run: node --check public/app.js
